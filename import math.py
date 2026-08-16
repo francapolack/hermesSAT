@@ -5,11 +5,17 @@ ascension=20
 tasa=15
 
 conversion=math.radians(300)
-print(conversion)
+#coseno 
+cos=math.cos(conversion)
+#seno
+sin=math.sin(conversion)
 print(f"{"SEPARADOR":-^30}")
-cosine=math.cos(conversion)
-print(f"Cosino en radianes:{cosine}")
+x=r*cos*cos
+print(f"EjeX:{x}")
 print(f"{"SEPARADOR":-^30}")
-x=r*cosine*cosine
-print(f"EjeX:{cosine}")
+y=r*cos*sin
+print(f"EjeY:{y}")
+print(f"{"SEPARADOR":-^30}")
+z=r*sin
+print(f"EjeZ{z}")
 print(f"{"SEPARADOR":-^30}")
