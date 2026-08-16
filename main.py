@@ -14,13 +14,14 @@ tierra_mas_orbita=6871 #6371km de distancia desde el radio de la tierra + 500km 
     
 def calculo_ejes(ascension,nombre):
     #convertimos las horas de ascension en grados
-    tasa_conversion=math.degrees(15)
+    tasa_conversion=15
     grado_constelacion=ascension*tasa_conversion
-    #calculo de ejeX
-    cos=math.cos(grado_constelacion)
+    #coseno y seno de las horas en grados 
+    cos=math.cos(math.radians(grado_constelacion))#dice raidans porq la funcion math requiere que el angulo sea radianes no grados (si lo ponemos sin convertir nos arruina los datos)
     cos_grado=math.degrees(cos)
-    sin=math.sin(grado_constelacion)
+    sin=math.sin(math.radians(grado_constelacion))
     sin_grado=math.degrees(sin)
+    #calculo de ejeX
     ejex=tierra_mas_orbita*cos_grado*cos_grado
     #calculo de ejeY
     ejey=tierra_mas_orbita*cos_grado*sin_grado

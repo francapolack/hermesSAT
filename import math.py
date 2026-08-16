@@ -2,18 +2,13 @@ import math
 
 r=6871
 ascension=20
-tasa=math.degrees(15)
+tasa=15
 
-cos=math.cos((tasa*ascension))
-sin=math.sin((tasa*ascension))
+conversion=math.radians(ascension*tasa)
 
-
-x=r*math.degrees(cos)*math.degrees(cos)
-print("-----------------")
-print(x)
-y=r*math.degrees(cos)*math.degrees(sin)
-print("-----------------")
-print(y)
-z=r*math.degrees(sin)
-print("-----------------")
-print(z)
+cosine=math.cos(conversion)
+print(f"Cosino en radianes:{cosine}")
+print(f"{"SEPARADOR":-^30}")
+cosino=math.degrees(cosine)
+print(f"Cosino en grados:{cosino}")
+print(f"{"SEPARADOR":-^30}")
