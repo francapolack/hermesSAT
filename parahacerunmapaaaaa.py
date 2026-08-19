@@ -1,10 +1,9 @@
 from matplotlib import pyplot as plt 
-
+import numpy as np
 #holiii franca d vuelta
 
 #codigo de dibujo del mapa 
-x=1717.750000000001
-y=-2975.2302747014396
+x,y=[0,1717.750000000001],[0,-2975.2302747014396]
 #lo hacemos oscuroo
 plt.style.use('dark_background')
 
@@ -13,8 +12,7 @@ fig,ax=plt.subplots(figsize=(12,8))
 Tierra=plt.Circle((0,0),800,color='green')
 ax.add_patch(Tierra)
 
-ax.plot(x,ls='solid',color='royalblue',marker='o')
-ax.plot(y,ls='solid',color='yellow',marker='o')
+ax.plot(x,y,'o-',markersize=8,color='red')
 
 ax.set_aspect('equal')
 ax.grid(True,linestyle='dashed',alpha=0.5)
