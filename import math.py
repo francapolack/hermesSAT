@@ -44,6 +44,5 @@ def mapita(x,y):
     plt.tight_layout()
 
     plt.savefig('orbita.png',dpi=1000)
-    plt.show()
 
 mapita(x,y)
