@@ -14,7 +14,7 @@ import numpy as np
 
 
 #CONSTANTES
-url="http://cam.jgp"#TODO:configure l8r to my wifi
+url="http:192.168.1.11//cam.jgp"#gracias ipconfig por tanto perdon x tan poco
 
 #1)Nombre en ingles de la clase 2)Nombre en español 3)Ascension recta (en horas)
 constelaciones_datos=["scorpius","Escorpio",18,"canis_major","Canis Mayor",7,"pleiades",4,"sagittarius","Sagitario",20]
@@ -87,7 +87,7 @@ def imagenp32():
 
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
-    resultados=modelo((imagenp32),show=False,conf=0.5,save=True)
+    resultados=modelo(r"C:\Users\frmuu\OneDrive\Imágenes\aguadebebeeeer",show=False,conf=0.5,save=True)
     for resultado in resultados:
         for box in resultado.boxes:
             posicion_nombre_cons=int(box.data[0][-1])

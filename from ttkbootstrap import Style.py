@@ -1,13 +1,14 @@
-#holis, franka axa :)
+#holis, franca aca :)
 
-#improtacion de librerias: ttk es boots xq ttk se interpreta como el ttk de tkiinter
+#ttk es boots xq ttk se interpreta como el ttk de tkiinter
 import ttkbootstrap as boots
-from PIL import Image, ImageTk
+from ultralytics import YOLO
+import math
+from matplotlib import pyplot as plt
+import cv2
 import urllib.request
 import numpy as np
-import cv2
-from ultralytics import YOLO
-from tkinter import *
+from funciones import *
 #constantes de TKINTER
 INFO="Lexend"
 TAM_INFO=25
