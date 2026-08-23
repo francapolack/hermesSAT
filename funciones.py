@@ -59,7 +59,6 @@ def calculo_ejes(ascension,nombre):
     #coseno y seno de las horas en grados 
     cos=math.cos(math.radians(grado_constelacion))#dice raidans porq la funcion math requiere que el angulo sea radianes no grados (si lo ponemos sin convertir nos arruina los datos)
     sin=math.sin(math.radians(grado_constelacion))
-
     #calculo de ejeX
     ejex=tierra_mas_orbita*cos*cos
     #calculo de ejeY
@@ -75,7 +74,6 @@ def calculo_ejes(ascension,nombre):
     print("------------------")
     print(ejez)
     mapita(ejex,ejey)
-    return ejey,ejez,ejex
 
 #SACAR IMAGEN DE LA ESP32
 def imagenp32():
@@ -100,20 +98,11 @@ def busqueda_datos(modelo):
                     num=int(num)
                     nom=constelaciones_datos[posicion]
                     calculo_ejes(num,nom)
-                    if cv2.waitKey(1) & 0xFF==ord('q'):
-                        break
-
-
 
 
 #----------------------------------------------------------------------------------------------
 #MAIN MAIIIIIN ACA ESTA EL MAAAAAAAAIN
-while True:
-    try:
-        busqueda_datos(yolov)
-    except Exception as e:
-        print(f"ERROR:{e}")
-
+busqueda_datos(yolov)
 
 
 
@@ -142,6 +131,5 @@ while True:
                         print("No se detecto constelacion.. seguimos buscando!!")
                     """
 
-busqueda_datos(yolov,r"C:\Users\frmuu\OneDrive\Imágenes\aguadebebeeeer")
 
             
