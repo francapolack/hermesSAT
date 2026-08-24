@@ -1,1 +1,0 @@
-ventana.mainloop()

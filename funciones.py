@@ -11,8 +11,7 @@ from matplotlib import pyplot as plt
 import cv2
 import urllib.request
 import numpy as np
-from 
-
+from mostrar import tkinter
 
 #CONSTANTES
 url="http://192.168.5.148//cam.jpg"#gracias ipconfig por tanto perdon x tan poco
@@ -49,7 +48,6 @@ def mapita(x,y):
     plt.tight_layout()
 
     plt.savefig('orbita.png',dpi=1000)
-    plt.show()
 
 #CALCULAR EJES X,Y,Z
 def calculo_ejes(ascension,nombre):
@@ -75,6 +73,8 @@ def calculo_ejes(ascension,nombre):
     print("------------------")
     print(ejez)
     mapita(ejex,ejey)
+    tkinter(nombre,ejex,ejey,ejez)
+    
 
 #SACAR IMAGEN DE LA ESP32
 def imagenp32():
@@ -97,10 +97,9 @@ def busqueda_datos(modelo):
                 if posicion:
                     num=constelaciones_datos[posicion-1]
                     num=int(num)
-                    nom=constelaciones_datos[posicion]
+                    nom=constelaciones_datos[posicion-2]
                     calculo_ejes(num,nom)
-
-
+                    
 #----------------------------------------------------------------------------------------------
 #MAIN MAIIIIIN ACA ESTA EL MAAAAAAAAIN
 busqueda_datos(yolov)
