@@ -9,7 +9,7 @@ from ultralytics import YOLO
 import math
 from matplotlib import pyplot as plt
 import cv2
-import urllib.request
+import requests
 import numpy as np
 from mostrar import *
 
@@ -78,17 +78,17 @@ def calculo_ejes(ascension,nombre):
 
 #SACAR IMAGEN DE LA ESP32
 def imagenp32(link):
-    pidoimagen=urllib.request.urlopen(link)#pido info a la url local (le pido la img)
-    pidoimagennp=np.array(bytearray(pidoimagen.read()),dtype=np.uint8)#decodifico lo que me manda la url local (imagen esp en un array)
-    frame=cv2.imdecode(pidoimagennp,-1)
-    alto,ancho,_=frame.shape
-    blob=cv2.dnn.blobFromImage(frame,1/255.0,(640,640),swapRB=True,crop=False)
-    cv2.imshow(blob)
-    return blob
+    img=requests.get(link,stream=True).raw
+    imagen=np.asarray(bytearray(img.read()),dtype="uint8")
+    imagen=cv2.imdecode(imagen,cv2.IMREAD_COLOR)
+    cv2.imshow("camara",imagen)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return imagen
 
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
-    resultados=modelo(imagenp32(),show=False,conf=0.5,save=True)
+    resultados=modelo(imagenp32("http://192.168.5.130/cam.jpeg"),show=False,conf=0.5,save=True)
     for resultado in resultados:
         for box in resultado.boxes:
             posicion_nombre_cons=int(box.data[0][-1])
