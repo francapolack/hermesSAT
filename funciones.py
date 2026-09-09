@@ -81,6 +81,7 @@ def imagenp32(link):
     img=requests.get(link,stream=True).raw
     imagen=np.asarray(bytearray(img.read()),dtype="uint8")
     imagen=cv2.imdecode(imagen,cv2.IMREAD_COLOR)
+    imagen=cv2.resize(imagen,(640,640))
     cv2.imshow("camara",imagen)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
