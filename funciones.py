@@ -11,13 +11,13 @@ from matplotlib import pyplot as plt
 import cv2
 import urllib.request
 import numpy as np
-from mostrar import tkinter
+from mostrar import *
 
 #CONSTANTES
-url="http://192.168.5.148//cam.jpg"#gracias ipconfig por tanto perdon x tan poco
+url="http://192.168.5.130/cam.jpeg"#gracias ipconfig por tanto perdon x tan poco
 
 #1)Nombre en ingles de la clase 2)Nombre en español 3)Ascension recta (en horas)
-constelaciones_datos=["scorpius","Escorpio",18,"canis_major","Canis Mayor",7,"pleiades",4,"sagittarius","Sagitario",20]
+constelaciones_datos=["scorpius","Escorpio",18,"canis_major","Canis Mayor",7,"pleiades","Pléyades",4,"sagittarius","Sagitario",20]
 
 tierra_mas_orbita=6871 
 
@@ -39,8 +39,8 @@ def mapita(x,y):
     ax.set_aspect('equal')
     ax.grid(True,linestyle='dashed',alpha=0.5)
 
-    ax.set_xlim(40000,-40000)
-    ax.set_ylim(40000,-40000)
+    ax.set_xlim(3500,-3500)
+    ax.set_ylim(3500,-3500)
 
     ax.set_xlabel("EjeX desde la tierra")
     ax.set_ylabel("EjeY desde la tierra")
@@ -77,17 +77,18 @@ def calculo_ejes(ascension,nombre):
     
 
 #SACAR IMAGEN DE LA ESP32
-def imagenp32():
-    pidoimagen=urllib.request.urlopen(url)#pido info a la url local (le pido la img)
+def imagenp32(link):
+    pidoimagen=urllib.request.urlopen(link)#pido info a la url local (le pido la img)
     pidoimagennp=np.array(bytearray(pidoimagen.read()),dtype=np.uint8)#decodifico lo que me manda la url local (imagen esp en un array)
     frame=cv2.imdecode(pidoimagennp,-1)
     alto,ancho,_=frame.shape
     blob=cv2.dnn.blobFromImage(frame,1/255.0,(640,640),swapRB=True,crop=False)
+    cv2.imshow(blob)
     return blob
 
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
-    resultados=modelo(r"C:/Users/frmuu/OneDrive/Imágenes/aguadebebeeeer",show=False,conf=0.5,save=True)
+    resultados=modelo(imagenp32(),show=False,conf=0.5,save=True)
     for resultado in resultados:
         for box in resultado.boxes:
             posicion_nombre_cons=int(box.data[0][-1])
@@ -95,14 +96,15 @@ def busqueda_datos(modelo):
             if nombre in constelaciones_datos:
                 posicion=constelaciones_datos.index(nombre)
                 if posicion:
-                    num=constelaciones_datos[posicion-1]
+                    num=constelaciones_datos[posicion+2]
                     num=int(num)
-                    nom=constelaciones_datos[posicion-2]
+                    nom=constelaciones_datos[posicion+1]
                     calculo_ejes(num,nom)
                     
 #----------------------------------------------------------------------------------------------
 #MAIN MAIIIIIN ACA ESTA EL MAAAAAAAAIN
 busqueda_datos(yolov)
+
 
 
 
