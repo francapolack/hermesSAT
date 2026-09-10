@@ -14,7 +14,7 @@ import numpy as np
 from mostrar import *
 
 #CONSTANTES
-url="http://192.168.5.130/cam.jpeg"#gracias ipconfig por tanto perdon x tan poco
+url="http://192.168.1.54/cam.jpeg"#gracias ipconfig por tanto perdon x tan poco
 
 #1)Nombre en ingles de la clase 2)Nombre en español 3)Ascension recta (en horas)
 constelaciones_datos=["scorpius","Escorpio",18,"canis_major","Canis Mayor",7,"pleiades","Pléyades",4,"sagittarius","Sagitario",20]
@@ -89,7 +89,7 @@ def imagenp32(link):
 
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
-    resultados=modelo(imagenp32("http://192.168.5.130/cam.jpeg"),show=False,conf=0.5,save=True)
+    resultados=modelo(imagenp32("http://192.168.1.54/cam.jpeg"),show=False,conf=0.5,save=True)
     for resultado in resultados:
         for box in resultado.boxes:
             posicion_nombre_cons=int(box.data[0][-1])
