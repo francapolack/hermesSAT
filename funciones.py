@@ -89,7 +89,7 @@ def imagenp32(link):
 
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
-    resultados=modelo(imagenp32("http://192.168.1.54/cam.jpeg"),show=False,conf=0.5,save=True)
+    resultados=modelo(r"C:/Users/frmuu/OneDrive/Imágenes/aguadebebeeeer",show=False,conf=0.5,save=True)
     for resultado in resultados:
         for box in resultado.boxes:
             posicion_nombre_cons=int(box.data[0][-1])
