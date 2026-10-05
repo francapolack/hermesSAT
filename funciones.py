@@ -12,9 +12,15 @@ import cv2
 import requests
 import numpy as np
 from mostrar import *
+from bs4 import BeautifulSoup 
+from urllib import request
+import time
 
 #CONSTANTES
-url="http://192.168.1.54/cam.jpeg"#gracias ipconfig por tanto perdon x tan poco
+url_imagen="http://192.168.1.54/cam.jpeg"#gracias ipconfig por tanto perdon x tan poco
+
+url_texto="http://192.168.1.54/estado"
+
 
 #1)Nombre en ingles de la clase 2)Nombre en español 3)Ascension recta (en horas)
 constelaciones_datos=["scorpius","Escorpio",18,"canis_major","Canis Mayor",7,"pleiades","Pléyades",4,"sagittarius","Sagitario",20]
@@ -78,15 +84,30 @@ def calculo_ejes(ascension,nombre):
 
 #SACAR IMAGEN DE LA ESP32
 def imagenp32(link):
-    img=requests.get(link,stream=True).raw
-    imagen=np.asarray(bytearray(img.read()),dtype="uint8")
-    imagen=cv2.imdecode(imagen,cv2.IMREAD_COLOR)
-    imagen=cv2.resize(imagen,(640,640))
-    cv2.imshow("camara",imagen)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    return imagen
+    try:
+        img=requests.get(link,stream=True).raw
+        imagen=np.asarray(bytearray(img.read()),dtype="uint8")
+        imagen=cv2.imdecode(imagen,cv2.IMREAD_COLOR)
+        imagen=cv2.resize(imagen,(640,640))
+        cv2.imshow("camara",imagen)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        return imagen
+    except Exception:
+        print("fallo con la URL CAMARA")
 
+def estado32(link):
+    try:
+        sopa=BeautifulSoup(request.urlopen(link).read(),"html.parser")
+        html=sopa.find("p")
+        if html:
+            res=html.get_text().strip()
+            if res=="RECALCULAR":
+                return True
+    except Exception:
+        print("fallo con la URL ESTADO")
+        return False
+    
 #DETECCION CON YOLOV8
 def busqueda_datos(modelo):
     resultados=modelo(r"C:/Users/frmuu/OneDrive/Imágenes/aguadebebeeeer",show=False,conf=0.5,save=True)
@@ -104,9 +125,14 @@ def busqueda_datos(modelo):
                     
 #----------------------------------------------------------------------------------------------
 #MAIN MAIIIIIN ACA ESTA EL MAAAAAAAAIN
-busqueda_datos(yolov)
 
-
+Bucle=True
+while Bucle:
+        if estado32(url_texto):
+            busqueda_datos(yolov)
+        time.sleep(1)
+Bucle=False
+print("Se termino la busqueda")
 
 
 #lo estoy conteniendo en una funcion para ver si lo llamo cuando la ESP32 se refresque
